@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>MessageBox Test</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+        }
+        input {
+            padding: 6px;
+            width: 250px;
+        }
+        button {
+            margin-top: 12px;
+            margin-right: 8px;
+            padding: 8px 14px;
+        }
+
+        /* Message box element */
+        #message-box {
+            position: fixed;
+            z-index: 1500;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Test MessageBox</h2>
+
+    <label>Melding:</label>
+    <input id="msgInput" type="text" value="Hei, dette er en test">
+
+    <label>Varighet (ms):</label>
+    <input id="durInput" type="number" value="3000">
+
+    <div style="margin-top: 20px;">
+        <button onclick="testInfo()">Info</button>
+        <button onclick="testSuccess()">Success</button>
+        <button onclick="testWarning()">Warning</button>
+        <button onclick="testError()">Error</button>
+        <button onclick="testConfirm()">Confirm</button>
+        <button onclick="testLoadingStart()">Start Loading</button>
+        <button onclick="testLoadingStop()">Stop Loading</button>
+    </div>
+
+    <script type="module">
+        import { showMessageBox } from './uiutils.js';
+
+        function getValues() {
+            return {
+                msg: document.getElementById('msgInput').value,
+                dur: Number(document.getElementById('durInput').value)
+            };
+        }
+
+        window.testInfo = () => {
+            const { msg, dur } = getValues();
+            showMessageBox(msg, 'info', dur);
+        };
+
+        window.testSuccess = () => {
+            const { msg, dur } = getValues();
+            showMessageBox(msg, 'success', dur);
+        };
+
+        window.testWarning = () => {
+            const { msg, dur } = getValues();
+            showMessageBox(msg, 'warning', dur);
+        };
+
+        window.testError = () => {
+            const { msg, dur } = getValues();
+            showMessageBox(msg, 'error', dur);
+        };
+
+        window.testConfirm = async () => {
+            const { msg } = getValues();
+            const result = await showMessageBox(msg, 'confirm');
+            console.log("Confirm result:", result);
+        };
+
+        window.testLoadingStart = () => {
+            const { msg } = getValues();
+            showMessageBox(msg, 'loading');
+        };
+
+        window.testLoadingStop = () => {
+            const { dur } = getValues();
+            showMessageBox("Ferdig", 'quit', dur);
+        };
+    </script>
+
+</body>
+</html>

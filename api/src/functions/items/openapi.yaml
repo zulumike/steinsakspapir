@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: Items API
+  version: 1.0.0
+  description: API for CRUD og Cosmos SQL-spørringer mot items-containeren.
+
+servers:
+  - url: /api
+
+paths:
+
+  /items:
+    get:
+      summary: Hent alle items
+      security:
+        - swaAuth: []
+      responses:
+        "200":
+          description: Liste over items
+
+  /items/{id}:
+    get:
+      summary: Hent ett item
+      security:
+        - swaAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+        - name: partitionKey
+          in: query
+          required: true
+      responses:
+        "200":
+          description: Ett item
+        "404":
+          description: Ikke funnet
+
+    put:
+      summary: Oppdater et item
+      security:
+        - swaAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+      requestBody:
+        required: true
+      responses:
+        "200":
+          description: Oppdatert item
+
+    delete:
+      summary: Slett et item
+      security:
+        - swaAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+      requestBody:
+        required: true
+      responses:
+        "200":
+          description: Slettet
+
+  /items/query:
+    post:
+      summary: Kjør Cosmos SQL-spørring
+      security:
+        - swaAuth: []
+      requestBody:
+        required: true
+      responses:
+        "200":
+          description: Resultat av spørring
+
+components:
+  securitySchemes:
+    swaAuth:
+      type: http
+      scheme: bearer
+      description: Azure Static Web Apps Authentication

@@ -1,0 +1,114 @@
+:root {
+    --msgbox-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+             Roboto, Helvetica, Arial, sans-serif;
+    --msgbox-info-bg: #e0f7fa;
+    --msgbox-info-text: #006064;
+    --msgbox-success-bg: #e8f5e9;
+    --msgbox-success-text: #1b5e20;
+    --msgbox-warning-bg: #fff3e0;
+    --msgbox-warning-text: #e65100;
+    --msgbox-error-bg: #ffebee;
+    --msgbox-error-text: #b71c1c;
+    --msgbox-confirm-bg: #e3f2fd;
+    --msgbox-confirm-text: #0d47a1;
+    --msgbox-loading-bg: #f5f5f5;
+    --msgbox-loading-text: #333;
+    --msgbox-border-radius: 4px;
+    --msgbox-button-bg: #f0f0f0;
+    --msgbox-button-hover-bg: #e0e0e0;
+    --msgbox-button-text: #000;
+}
+
+#message-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25); /* diffus mørk overlay */
+    backdrop-filter: blur(2px);      /* gjør UI litt uskarpt */
+    z-index: 900;                   /* under message-box */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+#message-backdrop.show {
+    opacity: 1;
+}
+
+.message-box {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 300px;
+    font-family: var(--msgbox-font-family);
+    border-radius: var(--msgbox-border-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 16px;
+    margin: 16px 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 1000;
+}
+
+.message-box.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.message-box.info {
+    background-color: var(--msgbox-info-bg);
+    color: var(--msgbox-info-text);
+}
+
+.message-box.success {
+    background-color: var(--msgbox-success-bg);
+    color: var(--msgbox-success-text);
+}
+
+.message-box.warning {
+    background-color: var(--msgbox-warning-bg);
+    color: var(--msgbox-warning-text);
+}
+
+.message-box.error {
+    background-color: var(--msgbox-error-bg);
+    color: var(--msgbox-error-text);
+}
+
+.message-box.confirm {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    max-width: 90vw;
+    background-color: var(--msgbox-confirm-bg);
+    color: var(--msgbox-confirm-text);
+    z-index: 1500;
+}
+
+.message-box.loading, .message-box.quit {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    max-width: 90vw;
+    background-color: var(--msgbox-loading-bg);
+    color: var(--msgbox-loading-text);
+    z-index: 3000;
+}
+
+.message-box button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--msgbox-button-bg);
+    color: var(--msgbox-button-text);
+    border: none;
+    padding: 8px 16px;
+    margin-top: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.message-box button + button {
+    margin-left: 8px;
+}

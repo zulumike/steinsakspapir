@@ -1,0 +1,68 @@
+📘 Items API – Dokumentasjon
+Dette dokumentet beskriver API‑et for CRUD‑operasjoner og spørringer mot items‑containeren i Cosmos DB.
+API‑et er bygget for Azure Functions og sikret via Azure Static Web Apps Authentication.
+---
+🔐 Autentisering og autorisasjon
+Alle endepunkter krever:
+• at brukeren er autentisert via SWA
+• at brukeren har riktig rolle i auth.ROLE_GROUPS
+Roller brukt i API‑et:
+Create → createItem
+Read → readItem
+Update → updateItem
+Delete → deleteItem
+Alle svar returneres som JSON.
+---
+📂 Endepunkter
+1. Hent alle items
+GET /api/items
+Returnerer alle dokumenter i items‑containeren.
+Krever rolle: readItem
+---
+2. Hent ett item
+GET /api/items/{id}?partitionKey={pk}
+Henter ett dokument basert på ID og partition key.
+Krever rolle: readItem
+---
+3. Opprett nytt item
+POST /api/items
+Oppretter et nytt dokument. Backend legger automatisk til createdBy og createdAt.
+Krever rolle: createItem
+---
+4. Oppdater item
+PUT /api/items/{id}
+Oppdaterer et eksisterende dokument.
+Krever rolle: updateItem
+Body-format:
+partitionKey: “123”
+item: { name: “Updated name”, category: “tools” }
+---
+5. Slett item
+DELETE /api/items/{id}
+Sletter et dokument.
+Krever rolle: deleteItem
+Body-format:
+partitionKey: “123”
+---
+6. Query items (Cosmos SQL)
+POST /api/items/query
+Kjører en Cosmos SQL‑spørring.
+Krever rolle: readItem
+Body-format:
+query: “SELECT * FROM c WHERE c.category = @cat”
+parameters: [ { name: “@cat”, value: “tools” } ]
+---
+🧱 Feilkoder
+400 – Ugyldig input
+401 – Ikke autentisert
+403 – Mangler rolle
+404 – Ikke funnet
+500 – Intern serverfeil
+---
+🧭 Frontend‑helpers
+getAllItems(endpoint) → GET /items
+getItemById(endpoint, id, pk) → GET /items/{id}?partitionKey=pk
+createItem(endpoint, item) → POST /items
+updateItem(endpoint, id, pk, item) → PUT /items/{id}
+deleteItem(endpoint, id, pk) → DELETE /items/{id}
+queryItemsCosmos(endpoint, queryObj) → POST /items/query

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>RPS Ring Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="lobby">
+    <h1>Stein Saks Papir – Ring Edition</h1>
+
+    <div id="createSection">
+        <h3>Opprett spill</h3>
+        <input id="creatorName" placeholder="Ditt navn">
+        <button id="createGameBtn">Opprett spill</button>
+        <p id="gameCode"></p>
+
+        <div id="botControls" style="display:none;">
+            <h4>Legg til bots</h4>
+            <input id="botCount" type="number" min="1" max="20" value="1">
+            <button id="addBotsBtn">Legg til bots</button>
+        </div>
+
+        <button id="startGameBtn" style="display:none;">Start Spill</button>
+    </div>
+
+    <hr>
+
+    <div id="joinSection">
+        <h3>Bli med i spill</h3>
+        <input id="playerName" placeholder="Ditt navn">
+        <input id="joinCode" placeholder="Game code">
+        <button id="joinBtn">Bli med</button>
+    </div>
+
+    <div id="players"></div>
+</div>
+
+<div id="game" style="display:none;">
+    <h2 id="roundInfo">Runde</h2>
+    <p>Tid som gjenstår: <span id="timer">20</span>s</p>
+
+    <div id="ring"></div>
+
+    <div id="choices">
+        <h3>Dine hender</h3>
+
+        <div>
+            <span>Venstre:</span>
+            <button class="handBtn" data-hand="left" data-value="rock">👊</button>
+            <button class="handBtn" data-hand="left" data-value="paper">✋</button>
+            <button class="handBtn" data-hand="left" data-value="scissor">✌️</button>
+        </div>
+
+        <div>
+            <span>Høyre:</span>
+            <button class="handBtn" data-hand="right" data-value="rock">👊</button>
+            <button class="handBtn" data-hand="right" data-value="paper">✋</button>
+            <button class="handBtn" data-hand="right" data-value="scissor">✌️</button>
+        </div>
+    </div>
+
+    <button id="nextRoundBtn" style="display:none;">Neste runde</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
