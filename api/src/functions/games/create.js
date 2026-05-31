@@ -1,23 +1,14 @@
 
 import { app } from '@azure/functions';
-import * as db from '../shared/cosmos.js';
-import * as auth from '../shared/auth.js';
+import * as db from '../../helpers/cosmos.js';
 
 app.http('items-create', {
     methods: ['POST'],
     authLevel: 'anonymous',
+    route: 'games',
     handler: async (request, context) => {
-        const user = auth.getUser(request);
-
-        if (!auth.isAuthenticated(user)) {
-            return { status: 401, jsonBody: { error: "Unauthorized" } };
-        }
-
-        if (!auth.requireRoles(user, auth.ROLE_GROUPS.createItem)) {
-            return { status: 403, jsonBody: { error: "Insufficient permissions" } };
-        }
-
-        context.log('Creating item for user:', user.userId);
+       
+        context.log('Creating item');
 
         let body;
         try {
@@ -31,11 +22,10 @@ app.http('items-create', {
         }
 
         // Audit-felter
-        body.createdBy = user.userId;
         body.createdAt = new Date().toISOString();
 
         try {
-            const result = await db.createItem('items', body);
+            const result = await db.createItem('games', body);
 
             return {
                 status: 201,

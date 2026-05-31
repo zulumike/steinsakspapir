@@ -4,7 +4,7 @@
 
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "./uiutils.css";   // endre sti hvis nødvendig
+    link.href = "./helpers/uiutils.css";   // endre sti hvis nødvendig
     link.dataset.uiutils = "messagebox";
     document.head.appendChild(link);
 })();

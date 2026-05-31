@@ -1,0 +1,12 @@
+* 26.05.2026
+> Startet på nytt prosjekt. Stein, saks papir.
+> Lagde først en variant vha CoPilot, men mistet fort oversikten, så bestemte meg for å begynne på scratch
+> Startet egentlig med at jeg lagde en kode-database, som jeg kan gjenbruke.
+> Kopierte api delen fra kode-databasen
+> Kopierte også dbfunctions og uiutils.
+> index.html delt opp i biter, lobby, waitingroom og game.
+> Appen starter i lobby, men hvis man er i aktivt spill, havner man i lobby eller waitingroom hvis spillet er startet.
+
+* 31.05.2026
+> Ryddet opp i api. swa gjenkjente ikke funksjoner i undermapper, men endret main i package.json, så løste det seg.
+> Commit

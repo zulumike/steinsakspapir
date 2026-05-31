@@ -1,22 +1,12 @@
 
 import { app } from '@azure/functions';
-import * as db from '../shared/cosmos.js';
-import * as auth from '../shared/auth.js';
+import * as db from '../../helpers/cosmos.js';
 
 app.http('items-update', {
     methods: ['PUT'],
     authLevel: 'anonymous',
-    route: 'items/{id}',
+    route: 'games/{id}',
     handler: async (req, context) => {
-        const user = auth.getUser(req);
-
-        if (!auth.isAuthenticated(user)) {
-            return { status: 401, jsonBody: { error: "Unauthorized" } };
-        }
-
-        if (!auth.requireRoles(user, auth.ROLE_GROUPS.updateItem)) {
-            return { status: 403, jsonBody: { error: "Insufficient permissions" } };
-        }
 
         const id = req.params.id;
 
@@ -43,11 +33,10 @@ app.http('items-update', {
         const item = body.item;
 
         // Audit
-        item.updatedBy = user.userId;
         item.updatedAt = new Date().toISOString();
 
         try {
-            const updated = await db.updateItem('items', id, partitionKey, item);
+            const updated = await db.updateItem('games', id, partitionKey, item);
 
             return {
                 status: 200,

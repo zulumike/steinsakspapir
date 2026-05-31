@@ -8,23 +8,33 @@
 <body>
     <main>
         <div id='lobby'>
-            <div id='createSection'>
-                <h3>Opprett spill</h3>
-                <input id='creatorName' placeholder='Ditt navn'>
-                <button id='createGameBtn'>Opprett spill</button>
-                <p id='gameCode'></p>
+            <div id='playerNameSection'>
+                <input id='playerName' placeholder='Ditt navn'>
             </div>
             <div id='joinSection'>
                 <h3>Bli med i spill</h3>
-                <input id='playerName' placeholder='Ditt navn'>
                 <input id='joinCode' placeholder='Spill kode'>
                 <button id='joinBtn'>Bli med</button>
             </div>
+            <div id='createSection'>
+                <h3>Opprett nytt spill</h3>
+                <button id='createGameBtn'>Opprett spill</button>
+                <p id='gameCode'></p>
+            </div>
             <div id='players'>
             </div>
-            <div id='game' style="display:none;">
-            </div>
+        </div>
+        <div id='waitingRoom'>
+            <h2>Vent på at spillet skal starte...</h2>
+            <p>Spillkode: <span id='waitingGameCode'></span></p>
+            <div id='waitingPlayers'></div>
+            <button id='addBotBtn' style='display:none'>Legg til bot</button> 
+            <button id='startGameBtn' style='display:none'>Start spill</button>
+            <button id='leaveWaitingRoomBtn'>Forlat spill</button>
+        </div>
+        <div id='game' style="display:none;">
         </div>
     </main>
+    <script type="module" src="app.js"></script>
 </body>
 </html>

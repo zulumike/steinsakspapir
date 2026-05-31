@@ -1,23 +1,12 @@
-// api/items-query/index.js
 import { app } from '@azure/functions';
-import * as db from '../shared/cosmos.js';
-import * as auth from '../shared/auth.js';
+import * as db from '../../helpers/cosmos.js';
 
 app.http('items-query', {
     methods: ['POST'],
     authLevel: 'anonymous',
-    route: 'items/query',
+    route: 'games/query',
     handler: async (req, context) => {
-        const user = auth.getUser(req);
-
-        if (!auth.isAuthenticated(user)) {
-            return { status: 401, jsonBody: { error: "Unauthorized" } };
-        }
-
-        if (!auth.requireRoles(user, auth.ROLE_GROUPS.readItem)) {
-            return { status: 403, jsonBody: { error: "Insufficient permissions" } };
-        }
-
+        
         let body;
         try {
             body = await req.json();
@@ -30,7 +19,7 @@ app.http('items-query', {
         }
 
         try {
-            const items = await db.queryItems('items', body);
+            const items = await db.queryItems('games', body);
             return {
                 status: 200,
                 jsonBody: items

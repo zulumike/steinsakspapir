@@ -1,22 +1,12 @@
 // api/items-get/index.js
 import { app } from '@azure/functions';
-import * as db from '../shared/cosmos.js';
-import * as auth from '../shared/auth.js';
+import * as db from '../../helpers/cosmos.js';
 
 app.http('items-get', {
     methods: ['GET'],
     authLevel: 'anonymous',
-    route: 'items/{id}',
+    route: 'games/{id}',
     handler: async (req, context) => {
-        const user = auth.getUser(req);
-
-        if (!auth.isAuthenticated(user)) {
-            return { status: 401, jsonBody: { error: "Unauthorized" } };
-        }
-
-        if (!auth.requireRoles(user, auth.ROLE_GROUPS.readItem)) {
-            return { status: 403, jsonBody: { error: "Insufficient permissions" } };
-        }
 
         const id = req.params.id;
         const partitionKey = req.query.get("partitionKey");
@@ -26,7 +16,7 @@ app.http('items-get', {
         }
 
         try {
-            const item = await db.getItem('items', id, partitionKey);
+            const item = await db.getItem('games', id, partitionKey);
 
             if (!item) {
                 return { status: 404, jsonBody: { error: "Item not found" } };

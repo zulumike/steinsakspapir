@@ -1,23 +1,13 @@
 
 import { app } from '@azure/functions';
-import * as db from '../shared/cosmos.js';
-import * as auth from '../shared/auth.js';
+import * as db from '../../helpers/cosmos.js';
 
 app.http('items-delete', {
     methods: ['DELETE'],
     authLevel: 'anonymous',
-    route: 'items/{id}',
+    route: 'games/{id}',
     handler: async (req, context) => {
-        const user = auth.getUser(req);
-
-        if (!auth.isAuthenticated(user)) {
-            return { status: 401, jsonBody: { error: "Unauthorized" } };
-        }
-
-        if (!auth.requireRoles(user, auth.ROLE_GROUPS.deleteItem)) {
-            return { status: 403, jsonBody: { error: "Insufficient permissions" } };
-        }
-
+        
         const id = req.params.id;
 
         // Hent body for å få partitionKey
@@ -33,7 +23,7 @@ app.http('items-delete', {
         }
 
         try {
-            await db.deleteItem('items', id, body.partitionKey);
+            await db.deleteItem('games', id, body.partitionKey);
             return { status: 204 };
         } catch (err) {
             context.log("Delete error:", err);
